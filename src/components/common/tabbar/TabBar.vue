@@ -23,12 +23,13 @@ export default {
 <style>
 #tab_bar{
   display: flex;
-  background-color: #f6f6f6;
-  box-shadow: 0 -1px 1px rgba(112, 107, 107, 0.2);
+  background-color: #ffffff;
+  box-shadow: 0 -1px 1px rgba(112, 107, 107, 0.146);
   position: fixed;
   right: 0;
   left: 0;
   bottom: 0;
+  z-index: 5;
 }
 
 </style>
