@@ -1,5 +1,7 @@
 <template>
+<div class="wrapper" ref="aaaa">
   <ul class="content">
+    <button @click="btnClick">按钮</button>
     <li>feilei1</li>
     <li>feilei2</li>
     <li>feilei3</li>
@@ -101,10 +103,12 @@
     <li>feilei99</li>
     <li>feilei100</li>
   </ul>
+</div>
+  
 </template>
 
 <script>
-// import BScroll from ' better-scroll'
+import BScroll from 'better-scroll'
 
 export default {
   name: 'Classify',
@@ -112,22 +116,40 @@ export default {
   props:{},
   data(){
     return {
+      scroll:null
     }
   },
   watch:{},
   computed:{},
-  methods:{},
+  methods:{
+    btnClick(){
+      console.log("btnClick");
+    }
+  },
+  // created是组件创建完后调用，此时没有挂载模板template
   created(){},
-  mounted(){}
+  mounted(){
+    this.scroll = new BScroll(this.$refs.aaaa,{
+      probeType : 3,
+      click: true,
+      pullUpLoad : true
+    })
+    this.scroll.on('scroll',(position) =>{
+      // console.log(position);
+    })
+    this.scroll.on('pullingUp',() =>{
+      console.log("上拉加载");
+    })
+  }
 }
 </script>
 
-<style>
-.content{
+<style scoped>
+.wrapper{
   height: 150px;
-  background-color: aquamarine;
+  background-color: rgb(127, 255, 140);
   /* 原生滚动 */
-  /* overflow: hidden; */
+  overflow: hidden;
   /* overflow-y: scroll; */
 }
 </style>
