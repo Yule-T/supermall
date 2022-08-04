@@ -13,7 +13,8 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo"></detail-comment-info>
       <goods-list ref="recommend" :goods="recommends"></goods-list>
     </scroll>
-    
+    <detail-bottom-bar></detail-bottom-bar>
+    <back-top @click.native="backClick" v-show="isBtnShow"></back-top>
   </div>
 </template>
 
@@ -25,6 +26,8 @@ import DetailShopInfo from './childcomps/DetailShopInfo.vue';
 import DetailGoodsInfo from './childcomps/DetailGoodsInfo.vue';
 import DetailParamInfo from './childcomps/DetailParamInfo.vue'
 import DetailCommentInfo from './childcomps/DetailCommentInfo.vue'
+import DetailBottomBar from './childcomps/DetailBottomBar.vue'
+import BackTop from "components/contend/backTop/BackTop.vue";
 
 import Scroll from 'components/common/scroll/Scroll.vue'
 import GoodsList from 'components/contend/goods/GoodsList.vue';
@@ -43,6 +46,8 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
+    BackTop,
     Scroll,
     GoodsList,
 
@@ -61,6 +66,7 @@ export default {
         themeTopYs :[],
         getThemeTopYs :null,
         currentIndex : 0,
+        isBtnShow: false,
 
     };
   },
@@ -75,6 +81,7 @@ export default {
         this.themeTopYs.push(this.$refs.params.$el.offsetTop);
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+        this.themeTopYs.push(Number.MAX_VALUE);
         console.log(this.themeTopYs);
       })
     },
@@ -88,14 +95,28 @@ export default {
       const positionY = -position.y
       // 2.positionY和整体对比
       let length = this.themeTopYs.length
-      for (let i = 0;i < length; i++) {
-        if(this.currentIndex !== i && ((i<length - 1 && positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1]) || (i === length - 1 && positionY >= this.themeTopYs[i]))){
+      for (let i = 0;i < length-1; i++) {
+
+        if(this.currentIndex !== i && (positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1])){
           this.currentIndex = i
-          // console.log(this.currentIndex);
+          console.log(this.currentIndex);
           this.$refs.nav.currentIndex = this.currentIndex
         }
+
+        // for (let i = 0;i < length; i++)
+        // if(this.currentIndex !== i && ((i<length - 1 && positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1]) || (i === length - 1 && positionY >= this.themeTopYs[i]))){
+        //   this.currentIndex = i
+        //   // console.log(this.currentIndex);
+        //   this.$refs.nav.currentIndex = this.currentIndex
+        // }
+
+        //判断backtop是否显示
+        this.isBtnShow = position.y < -1000;
       }
-    }
+    },
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
   },
   created() {
     //1.保存传入的iid
@@ -139,7 +160,8 @@ export default {
   background-color: rgb(255, 255, 255);
 }
 .content{
-  height: calc(100vh - 44px);
+  height: calc(100vh - 44px - 58px);
   overflow: hidden;
+  /* background-color: aquamarine; */
 }
 </style>

@@ -23,8 +23,8 @@ export default {
 <style scoped>
 .back-top{
     position: fixed;
-    right: 6px;
-    bottom: 48px;
+    right: 15px;
+    bottom: 58px;
 }
 .back-top img{
     height: 45px;
