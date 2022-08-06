@@ -13,8 +13,9 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo"></detail-comment-info>
       <goods-list ref="recommend" :goods="recommends"></goods-list>
     </scroll>
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
     <back-top @click.native="backClick" v-show="isBtnShow"></back-top>
+    <!-- <toast :message="message" :show="show"></toast> -->
   </div>
 </template>
 
@@ -27,13 +28,16 @@ import DetailGoodsInfo from './childcomps/DetailGoodsInfo.vue';
 import DetailParamInfo from './childcomps/DetailParamInfo.vue'
 import DetailCommentInfo from './childcomps/DetailCommentInfo.vue'
 import DetailBottomBar from './childcomps/DetailBottomBar.vue'
-import BackTop from "components/contend/backTop/BackTop.vue";
 
+import BackTop from "components/contend/backTop/BackTop.vue";
 import Scroll from 'components/common/scroll/Scroll.vue'
 import GoodsList from 'components/contend/goods/GoodsList.vue';
+// import Toast from '../../components/common/toast/Toast.vue';
 
 import {getDetail,Goods,Shop,GoodsParam,getReCommend} from 'network/detail';
 import { debounce } from '../../common/utils';
+
+import { mapActions } from 'vuex';
 
 export default {
   name:'Detail',
@@ -47,10 +51,10 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     DetailBottomBar,
+    // Toast,
     BackTop,
     Scroll,
     GoodsList,
-
 
   },
   data() {
@@ -67,11 +71,15 @@ export default {
         getThemeTopYs :null,
         currentIndex : 0,
         isBtnShow: false,
-
+        // message : '',
+        // show: false
     };
   },
   computed: {},
   methods: {
+    ...mapActions({
+      add : 'addCart'
+    }),
     imageLoad(){
       // console.log(this.$refs.scroll.refresh);
       this.$refs.scroll.refresh()
@@ -82,7 +90,7 @@ export default {
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
         this.themeTopYs.push(Number.MAX_VALUE);
-        console.log(this.themeTopYs);
+        // console.log(this.themeTopYs);
       })
     },
     titleClick(index){
@@ -117,6 +125,31 @@ export default {
     backClick() {
       this.$refs.scroll.scrollTo(0, 0);
     },
+    addToCart(){
+      //1.获取购物车展示商品信息
+      const product = {}
+      product.image = this.topImages[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.price = this.goods.realPrice
+      product.iid = this.iid
+      // console.log(product);
+      //2.添加进购物车
+      // this.$store.dispatch('addCart',product)
+      // this.$store.dispatch('addCart',product).then(res =>{
+      //   console.log(res);
+      // })
+      this.add(product).then(res =>{
+        // this.show = true;
+        // this.message = res ;
+        // setTimeout(() => {
+        //   this.show = false;
+        //   this.message = ''
+        // }, 1500);
+        this.$toast.show(res,1500)
+      })
+    },
+
   },
   created() {
     //1.保存传入的iid

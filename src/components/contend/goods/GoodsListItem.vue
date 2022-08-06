@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="shouImage" alt="" @load="imageLoad" />
+    <img v-lazy="shouImage" :key="shouImage" alt="" @load="imageLoad" />
     <div class="goods-info">
       <p>{{ goodsItem.title }}</p>
       <span class="price">{{ goodsItem.price }}</span>
@@ -27,7 +27,10 @@ export default {
   computed: {
     shouImage() {
       return this.goodsItem.image || this.goodsItem.show.img
-    }
+    },
+    // shouIid() {
+    //   return this.goodsItem.shop_id || this.goodsItem.iid
+    // }
   },
   methods: {
     imageLoad() {

@@ -15,9 +15,8 @@
       </div>
     </div>
     <div class="bar-item bar-right">
-      <div class="cart" >加入购物车</div>
-      <!-- @click="addToCart" @click="buy" -->
-      <div class="buy">购买</div>
+      <div class="cart" @click="addCart">加入购物车</div>
+      <div class="buy" @click="buy">购买</div>
     </div>
   </div>
 </template>
@@ -26,25 +25,27 @@
 export default {
   name: 'DetailBottomBar',
   methods: {
-    addToCart() {
-      // console.log(123)
+    addCart() {
+      this.$emit('addCart')
+
       // 点击加入购物车的时候，由子组件触发事件传到父组件上
-      if(this.$store.state.islogin == false){
-        this.$toast.show('未登录账号，无法添加购物车',1000)
-      }else {
-        this.$emit('addToCart')
-        this.$toast.show('添加购物车成功',1000)
-      }
+      // if(this.$store.state.islogin == false){
+      //   this.$toast.show('未登录账号，无法添加购物车',1000)
+      // }else {
+      //   this.$emit('addToCart')
+      //   this.$toast.show('添加购物车成功',1000)
+      // }
       
       
     },
     buy() {
-      if(this.$store.state.islogin == false){
-        this.$toast.show('未登录账号，无法购买',1000)
-      }else {
-        this.$emit('buy')
-        this.$toast.show('购买成功',1000)
-      }
+      console.log('abc')
+      // if(this.$store.state.islogin == false){
+      //   this.$toast.show('未登录账号，无法购买',1000)
+      // }else {
+      //   this.$emit('buy')
+      //   this.$toast.show('购买成功',1000)
+      // }
       
     }
   },
