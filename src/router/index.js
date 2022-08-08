@@ -37,7 +37,7 @@ const routes = [
 ];
 
 const router = new Router({
-  base: '/supmall/',
+  // base: '/supmall/',
   routes: routes,
   mode: "history"
 });
