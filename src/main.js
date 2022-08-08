@@ -14,7 +14,7 @@ Vue.prototype.$bus = new Vue()
 Vue.use(toast)
 //使用懒加载插件
 Vue.use(vueLazyload,{
-  loading: require('./assets/img/common/bci.png')
+  loading: require('assets/img/common/bci.png')
 })
 
 /* eslint-disable no-new */

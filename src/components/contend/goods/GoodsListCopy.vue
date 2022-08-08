@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import GoodsListItem from './GoodsListItem.vue';
+import GoodsListItem from './GoodsListItemCopy.vue';
 
 export default {
-  name:'GoodsList',
+  name:'GoodsListItemCopy',
   props:{
     goods:{
         type:Array,

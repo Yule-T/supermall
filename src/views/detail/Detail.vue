@@ -16,6 +16,7 @@
     <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
     <back-top @click.native="backClick" v-show="isBtnShow"></back-top>
     <!-- <toast :message="message" :show="show"></toast> -->
+
   </div>
 </template>
 
@@ -31,7 +32,7 @@ import DetailBottomBar from './childcomps/DetailBottomBar.vue'
 
 import BackTop from "components/contend/backTop/BackTop.vue";
 import Scroll from 'components/common/scroll/Scroll.vue'
-import GoodsList from 'components/contend/goods/GoodsList.vue';
+import GoodsList from 'components/contend/goods/GoodsListCopy.vue';
 // import Toast from '../../components/common/toast/Toast.vue';
 
 import {getDetail,Goods,Shop,GoodsParam,getReCommend} from 'network/detail';
@@ -107,7 +108,7 @@ export default {
 
         if(this.currentIndex !== i && (positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1])){
           this.currentIndex = i
-          console.log(this.currentIndex);
+          // console.log(this.currentIndex);
           this.$refs.nav.currentIndex = this.currentIndex
         }
 
